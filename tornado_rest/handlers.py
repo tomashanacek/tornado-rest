@@ -1,5 +1,6 @@
 import tornado.web
 import errors
+import validation
 from raven.contrib.tornado import SentryMixin
 from tornado.gen import coroutine
 
@@ -37,3 +38,12 @@ class BaseHandler(SentryMixin, tornado.web.RequestHandler):
     def validate_token(self):
         """Override to determine the token from, e.g., a database."""
         return
+
+    def validate_arguments(self, validate_class):
+        arguments = dict(
+            (key, self.get_argument(key))
+            for key in self.request.arguments)
+        return validation.validate(arguments, validate_class)
+
+    def validate_body(self, validate_class):
+        return validation.validate(self.json, validate_class)
