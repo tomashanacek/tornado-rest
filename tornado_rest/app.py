@@ -6,10 +6,6 @@ from raven.contrib.tornado import AsyncSentryClient
 
 define("address", default="localhost", help="run on the given address")
 define("port", default=8888, help="run on the given port", type=int)
-define("config_file",
-       default=os.path.join(
-           os.path.dirname(os.path.realpath(__file__)), "config/config.py"),
-       help="filename for additional configuration")
 define("debug", default=False, group="application",
        help="run in debug mode (with automatic reloading)")
 define("sentry_dns", group="application")
