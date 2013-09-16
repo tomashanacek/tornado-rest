@@ -1,4 +1,3 @@
-import os
 import tornado.ioloop
 import tornado.web
 from tornado.options import define, options
@@ -13,9 +12,6 @@ define("sentry_dns", group="application")
 
 class Application(tornado.web.Application):
     def __init__(self, handlers, **settings):
-        settings["static_path"] = os.path.join(
-            os.path.dirname(os.path.realpath(__file__)), "static")
-
         super(Application, self).__init__(handlers, **settings)
 
         self.sentry_client = AsyncSentryClient(self.settings["sentry_dns"])
